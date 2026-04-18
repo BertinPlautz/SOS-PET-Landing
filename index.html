@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KIT S.O.S. PET - A Farmácia Natural em Casa</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Playfair for elegant headings, Inter for high readability body text, Caveat for hand-written annotations -->
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sage: {
+                            100: '#eef2ee',
+                            300: '#a3b19b',
+                            500: '#7a8d75', // Base
+                            700: '#4f6355',
+                            900: '#2c3e2e', // Deep Dark Premium
+                        },
+                        oat: '#fdfbf7',     // Ultra light beige
+                        sand: '#f5f0e6',    // Warm sand/beige
+                        gold: '#d4af37',    // Classic Gold
+                        goldglow: '#fbe285', // Radiant gold for glows
+                        cta: '#ff4c15',     // Hyper-vibrant Orange/Red (Neon contrast)
+                        ctaHover: '#e03a0a',
+                        ctaDark: '#a32805',
+                        darkText: '#181a18' // Almost black with a touch of green
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                        hand: ['Caveat', 'cursive'],
+                    },
+                    boxShadow: {
+                        'premium': '0 30px 60px -15px rgba(0, 0, 0, 0.08), 0 10px 30px -10px rgba(0, 0, 0, 0.03)',
+                        'premium-dark': '0 30px 60px -15px rgba(0, 0, 0, 0.4), 0 10px 30px -10px rgba(0, 0, 0, 0.2)',
+                        'cta': '0 20px 40px -10px rgba(255, 76, 21, 0.4), 0 10px 20px -5px rgba(255, 76, 21, 0.3)',
+                        '3d-btn': '0 8px 0 #a32805, 0 15px 20px rgba(255, 76, 21, 0.4)',
+                        '3d-btn-active': '0 2px 0 #a32805, 0 5px 10px rgba(255, 76, 21, 0.4)',
+                    },
+                    backgroundImage: {
+                        'mesh-dark': 'radial-gradient(at 10% 20%, rgba(122, 141, 117, 0.15) 0px, transparent 50%), radial-gradient(at 90% 80%, rgba(212, 175, 55, 0.08) 0px, transparent 50%)',
+                        'mesh-light': 'radial-gradient(at 0% 0%, rgba(122, 141, 117, 0.08) 0px, transparent 50%), radial-gradient(at 100% 100%, rgba(212, 175, 55, 0.05) 0px, transparent 50%)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Base Reset & Smoothness */
+        ::selection { background-color: #d4af37; color: #181a18; }
+        html.scroll-smooth { scroll-behavior: smooth; }
+        
+        /* Texture Overlay (Grain) - Editorial Vibe */
+        .bg-grain {
+            position: relative;
+        }
+        .bg-grain::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 1; /* Keep above bg, below content */
+            opacity: 0.8;
+        }
+
+        /* 3D Button Dynamics */
+        .btn-3d {
+            transition: all 0.15s ease-out;
+            box-shadow: 0 8px 0 #a32805, 0 15px 20px rgba(255, 76, 21, 0.4);
+            transform: translateY(0);
+        }
+        .btn-3d:hover {
+            transform: translateY(2px);
+            box-shadow: 0 6px 0 #a32805, 0 10px 15px rgba(255, 76, 21, 0.4);
+            filter: brightness(1.05);
+        }
+        .btn-3d:active {
+            transform: translateY(8px);
+            box-shadow: 0 0px 0 #a32805, 0 0px 5px rgba(255, 76, 21, 0.4);
+        }
+
+        /* Continuous Attention Grabber / Pulse */
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            14% { transform: scale(1.03); }
+            28% { transform: scale(1); }
+            42% { transform: scale(1.03); }
+            70% { transform: scale(1); }
+        }
+        .btn-animated {
+            animation: heartbeat 2.5s infinite;
+        }
+
+        /* Staggered Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px) scale(0.98);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
+
+        /* Mockup Float */
+        @keyframes float-complex {
+            0% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-12px) rotate(1deg); }
+            66% { transform: translateY(-5px) rotate(-1deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        .animate-float {
+            animation: float-complex 8s ease-in-out infinite;
+        }
+
+        /* Soft Glow Radial Behind Image */
+        .glow-behind {
+            position: relative;
+        }
+        .glow-behind::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 120%;
+            height: 120%;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.2) 0%, rgba(122, 141, 117, 0.0) 70%);
+            z-index: -1;
+            filter: blur(40px);
+            border-radius: 50%;
+        }
+
+        /* Direct Response Text Highlight SVG */
+        .highlight-marker {
+            position: relative;
+            display: inline-block;
+            white-space: nowrap;
+        }
+        .highlight-marker svg {
+            position: absolute;
+            bottom: -5px;
+            left: -2%;
+            width: 104%;
+            height: 15px;
+            z-index: -1;
+            stroke-dasharray: 500;
+            stroke-dashoffset: 500;
+        }
+        .reveal.active .highlight-marker svg {
+            animation: draw-line 1s ease-out forwards;
+            animation-delay: 0.5s;
+        }
+        @keyframes draw-line {
+            to { stroke-dashoffset: 0; }
+        }
+
+        /* Handwriting elements absolute positioning */
+        .hand-drawn-arrow {
+            position: absolute;
+            pointer-events: none;
+            opacity: 0.8;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        }
+
+        @media (max-width: 768px) {
+            .mobile-bottom-cta {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                z-index: 100;
+                padding: 1rem 1rem 1.5rem 1rem;
+                background: linear-gradient(to top, rgba(253,251,247,1) 75%, rgba(253,251,247,0));
+                transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+                transform: translateY(150%);
+            }
+            .mobile-bottom-cta.active {
+                transform: translateY(0);
+            }
+            body { padding-bottom: 90px; } /* Prevent footer hide */
+        }
+    </style>
+</head>
+<body class="font-sans text-darkText bg-oat antialiased overflow-x-hidden selection:bg-gold selection:text-white">
+
+    <!-- SEÇÃO 1: HERO -> A SUPER PROMESSA -->
+    <header class="relative min-h-[95vh] flex items-center justify-center overflow-hidden bg-sage-900 bg-grain pt-10 md:pt-0">
+        <!-- Abstract gradient mesh overlay for high-end feel -->
+        <div class="absolute inset-0 bg-mesh-dark z-0 opacity-80 mix-blend-screen"></div>
+
+        <!-- Hero Background Image (Obscurecida & Integrada) -->
+        <div class="absolute inset-0 z-0">
+            <!-- Fade image explicitly to keep focus on copy -->
+            <img src="assets/1.jpg" alt="Cão e gato felizes" class="w-full h-full object-cover object-center md:object-[center_top] opacity-50 md:opacity-70 filter saturate-50">
+            <div class="absolute inset-0 bg-gradient-to-b from-sage-900/70 via-sage-900/30 to-sage-900/95"></div>
+        </div>
+
+        <div class="container mx-auto px-5 relative z-30 text-center pt-24 pb-32 md:pt-20 md:pb-40 flex flex-col items-center">
+            
+            <!-- Badge Superior de Autoridade -->
+            <div class="reveal inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-4 py-1.5 mb-8 md:mb-10 shadow-lg">
+                <span class="text-gold text-lg">★</span>
+                <span class="text-oat text-xs md:text-sm font-semibold tracking-wide uppercase">Protocolos Caseiros Validados</span>
+            </div>
+
+            <div class="max-w-[1000px] mx-auto space-y-6 md:space-y-8 drop-shadow-[0_5px_15px_rgba(0,0,0,0.4)]">
+                <!-- Headline (Super Promise) -->
+                <h1 class="reveal font-serif text-[34px] leading-[1.15] md:text-6xl lg:text-[72px] lg:leading-[1.05] text-white font-medium tracking-tight drop-shadow-xl">
+                    O Sistema Não Quer Curar o Seu Pet. <br class="hidden xl:block"> Eles Querem um
+                    <span class="highlight-marker text-goldglow font-bold italic pr-2 pb-1 relative inline-block whitespace-nowrap mt-2 md:mt-0">
+                        Cliente Mensalista
+                        <svg viewBox="0 0 250 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 16.5C40.6667 11.1667 127.5 -0.499999 247.5 7.5" stroke="#ff4c15" stroke-width="4" stroke-linecap="round"/></svg>
+                    </span>.
+                </h1>
+                
+                <h2 class="reveal delay-100 font-serif text-[24px] md:text-[32px] text-goldglow/90 leading-tight block mt-6 md:mt-8 font-medium">
+                    O "Arquivo de Clínicas Internacionais" revelado por uma Naturopata Animal:
+                </h2>
+                
+                <!-- Subheadline -->
+                <p class="reveal delay-200 text-sage-100/90 text-[17px] md:text-[21px] font-light max-w-[900px] mx-auto leading-relaxed mt-4 mb-10">
+                    <strong class="text-white font-medium">20 protocolos de ação rápida</strong> para parar a coceira que sangra, estabilizar vômitos, reduzir a queda de pêlos, eliminar fungos, apagar o cheiro de xixi da sua casa em 72 horas e MUITO MAIS. <br class="hidden md:block"><br class="hidden md:block">
+                    <span class="text-oat font-semibold relative inline-block mt-2 md:mt-0 bg-sage-500/20 px-3 py-1 rounded-lg border border-sage-500/30">Aumente o tempo de vida do seu melhor amigo sem gastar uma FORTUNA e sem sair da sua cozinha.</span>
+                </p>
+
+                <!-- CTA Zone -->
+                <div class="reveal delay-300 pt-6 relative w-full md:w-auto flex flex-col items-center">
+                    
+                    <!-- Arrow handdrawn pointing to button (Desktop only) -->
+                    <svg class="hidden md:block hand-drawn-arrow -top-4 -left-16 w-16 text-gold" viewBox="0 0 71 85" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M68.5 2C52.1667 19.3333 13.7 57.6 2 83.5M2 83.5C6 73.1667 17.5 54.1 27.5 60.5M2 83.5C11.6667 85.5 31.8 86.8 35 77.5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+
+                    <a href="https://pay.kiwify.com.br/kZxqOrz" class="relative group block w-full md:w-[500px]">
+                        <!-- Pulsing glow behind button -->
+                        <div class="absolute -inset-1 bg-gradient-to-r from-cta to-orange-400 rounded-full blur-xl opacity-40 group-hover:opacity-70 transition duration-500 group-hover:duration-200 animate-pulse"></div>
+                        <button class="relative w-full text-white bg-gradient-to-b from-[#ff6838] to-cta font-bold text-[19px] md:text-[24px] tracking-wide px-8 md:px-12 py-5 md:py-6 rounded-full btn-3d btn-animated w-full text-center border border-white/20">
+                            QUERO PROTEGER MEU PET <br class="md:hidden"><span class="text-[14px] md:text-[18px] opacity-90 font-medium block md:inline md:ml-2">E ECONOMIZAR AGORA!</span>
+                        </button>
+                    </a>
+
+                    <!-- Trust Bar Under Button -->
+                    <div class="mt-8 flex flex-wrap items-center justify-center text-[13px] md:text-sm text-sage-100/60 gap-x-6 gap-y-3 font-medium px-4">
+                        <div class="flex items-center gap-1.5">
+                            <svg class="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                            Compra 100% Segura
+                        </div>
+                        <div class="hidden md:block w-1.5 h-1.5 rounded-full bg-sage-500/50"></div>
+                        <div class="flex items-center gap-1.5">
+                            <svg class="w-4 h-4 text-gold glow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                            Acesso Imediato ao Material
+                        </div>
+                        <div class="hidden md:block w-1.5 h-1.5 rounded-full bg-sage-500/50"></div>
+                        <div class="flex items-center gap-1.5">
+                            <svg class="w-4 h-4 text-oat" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                            Garantia de 7 Dias
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Curva Orgânica Inferior -->
+        <div class="absolute bottom-[-1px] left-0 w-full overflow-hidden leading-[0] z-20">
+            <svg class="block w-full h-[50px] md:h-[90px]" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <!-- Using Sand matching the next section -->
+                <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V120H0Z" fill="#f5f0e6" opacity="0.5"></path>
+                <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-50.24V120H0Z" fill="#f5f0e6"></path>
+            </svg>
+        </div>
+    </header>
+
+    <!-- SEÇÃO 2: AGITAÇÃO DA DOR (O "CSI" DO TUTOR) -->
+    <section class="py-24 md:py-32 bg-sand relative overflow-hidden bg-mesh-light">
+        <div class="container mx-auto px-5 relative z-10">
+            <div class="text-center max-w-[800px] mx-auto mb-16 md:mb-24 reveal">
+                <p class="font-hand text-cta text-2xl md:text-3xl mb-4 rotate-[-2deg]">Sinceramente...</p>
+                <h2 class="font-serif text-[32px] leading-tight md:text-5xl text-darkText font-bold mb-6 tracking-tight">
+                    Se você ama o seu animal, mas <br class="hidden md:block">
+                    <span class="relative inline-block text-white bg-sage-700 px-4 py-1 mt-2 transform -skew-x-3 -rotate-1 rounded-sm shadow-md">
+                        <span class="inline-block transform skew-x-3 rotate-1">não aguenta mais:</span>
+                    </span>
+                </h2>
+            </div>
+
+            <!-- Grid de Dores - Editorial Style (Polaroids) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-[1200px] mx-auto">
+                
+                <!-- Dor 1 -->
+                <div class="reveal delay-100 group bg-white p-3 pb-8 rounded-md shadow-premium transform transition-all duration-500 hover:-translate-y-3 hover:shadow-premium-dark rotate-1 hover:rotate-0">
+                    <div class="w-full h-52 md:h-60 overflow-hidden relative shadow-inner mb-5 bg-gray-100">
+                        <img src="assets/2.jpg" alt="Cão se coçando" class="w-full h-full object-cover transform transition duration-1000 group-hover:scale-110 filter group-hover:contrast-110">
+                    </div>
+                    <div class="px-3">
+                        <h3 class="font-serif font-bold text-xl text-sage-900 mb-3 border-b-2 border-sage-100 pb-2">A Falência da Coceira</h3>
+                        <p class="text-[15px] text-gray-600 leading-relaxed font-medium">Ver seu cachorro se coçar até sangrar e gastar fortunas em remédios intermináveis que nunca resolvem o foco do problema.</p>
+                    </div>
+                </div>
+
+                <!-- Dor 2 -->
+                <div class="reveal delay-200 group bg-white p-3 pb-8 rounded-md shadow-premium transform transition-all duration-500 hover:-translate-y-3 hover:shadow-premium-dark -rotate-2 hover:rotate-1">
+                    <div class="w-full h-52 md:h-60 overflow-hidden relative shadow-inner mb-5 bg-gray-100">
+                        <!-- Dark overlay on this one specifically to simulate night -->
+                        <div class="absolute inset-0 bg-blue-900/15 group-hover:bg-blue-900/0 transition duration-1000 z-10 pointer-events-none"></div>
+                        <img src="assets/3.jpg" alt="Emergência Madrugada" class="w-full h-full object-cover transform transition duration-1000 group-hover:scale-110">
+                    </div>
+                    <div class="px-3">
+                        <h3 class="font-serif font-bold text-xl text-sage-900 mb-3 border-b-2 border-sage-100 pb-2">Pânico da Madrugada</h3>
+                        <p class="text-[15px] text-gray-600 leading-relaxed font-medium">Entrar em desespero com vômitos e diarreia na madrugada de domingo sem ter de onde tirar dinheiro para arcar com a clínica.</p>
+                    </div>
+                </div>
+
+                <!-- Dor 3 -->
+                <div class="reveal delay-300 group bg-white p-3 pb-8 rounded-md shadow-premium transform transition-all duration-500 hover:-translate-y-3 hover:shadow-premium-dark rotate-2 hover:-rotate-1">
+                    <div class="w-full h-52 md:h-60 overflow-hidden relative shadow-inner mb-5 bg-gray-100">
+                        <img src="assets/4.jpg" alt="Lágrima Ácida" class="w-full h-full object-cover transform transition duration-1000 group-hover:scale-110">
+                    </div>
+                    <div class="px-3">
+                        <h3 class="font-serif font-bold text-xl text-sage-900 mb-3 border-b-2 border-sage-100 pb-2">A Vergonha (Lágrima)</h3>
+                        <p class="text-[15px] text-gray-600 leading-relaxed font-medium">A tristeza inevitável de ver manchas escuras, úmidas e com mau cheiro estragando e marcando pra sempre o rostinho do pet.</p>
+                    </div>
+                </div>
+
+                <!-- Dor 4 -->
+                <div class="reveal delay-100 group bg-white p-3 pb-8 rounded-md shadow-premium transform transition-all duration-500 hover:-translate-y-3 hover:shadow-premium-dark -rotate-1 hover:rotate-1">
+                    <div class="w-full h-52 md:h-60 overflow-hidden relative shadow-inner mb-5 bg-gray-100">
+                        <img src="assets/5.jpg" alt="Casa Destruída e Xixi" class="w-full h-full object-cover transform transition duration-1000 group-hover:scale-110">
+                    </div>
+                    <div class="px-3">
+                        <h3 class="font-serif font-bold text-xl text-sage-900 mb-3 border-b-2 border-sage-100 pb-2">A Casa Destruída</h3>
+                        <p class="text-[15px] text-gray-600 leading-relaxed font-medium">Chegar exausto do trabalho apenas para encontrar portas roídas e um cheiro insuportável de xixi grudado no tapete da sala.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Transition Quote Block -->
+            <div class="mt-28 md:mt-32 max-w-[900px] mx-auto reveal relative">
+                <div class="absolute -top-10 -left-6 md:-left-12 text-[120px] font-serif text-gold/20 leading-none select-none pointer-events-none">"</div>
+                <div class="bg-white rounded-[2rem] p-8 md:p-14 text-center shadow-[0_20px_40px_-15px_rgba(122,141,117,0.15)] border border-sage-100 relative">
+                    
+                    <p class="text-[19px] md:text-[23px] font-serif text-sage-900 leading-[1.6]">
+                        O sistema tradicional quer te manter como um <strong class="text-cta">"cliente mensalista"</strong>, comprando rações hipoalergênicas e remédios caros mês a mês. 
+                        <br><br>
+                        O que não te contam é que a solução imediata para 80% dessas dores <span class="relative inline-block whitespace-nowrap"><span class="relative z-10 font-bold px-1">custa menos de R$ 10,00</span><svg class="absolute inset-0 w-full h-full text-gold/30 -z-0" preserveAspectRatio="none" viewBox="0 0 100 100" fill="currentColor"><path d="M0,50 Q25,20 50,50 T100,50 L100,100 L0,100 Z" transform="scale(1, 0.4) translate(0, 100)"/></svg><span class="absolute bottom-1 left-0 w-full h-[30%] bg-gold/40 -z-10 -rotate-1 skew-x-12"></span></span> e espera por você dentro da sua própria despensa.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO 3: A SOLUÇÃO (O KIT MÁGICO) -->
+    <section class="py-24 md:py-36 bg-oat relative z-20 border-t border-oat drop-shadow-xl">
+        <div class="container mx-auto px-5 relative z-10">
+            <div class="flex flex-col lg:flex-row items-center gap-16 lg:gap-24 max-w-[1200px] mx-auto">
+                
+                <!-- Mockup Imagem 3D Float -->
+                <div class="w-full lg:w-1/2 flex justify-center order-2 lg:order-1 reveal delay-100">
+                    <div class="relative w-full max-w-[550px] glow-behind">
+                        <!-- Imagem 8.jpg deslocada para a Seção Solução -->
+                        <img src="assets/8.jpg" alt="Dona Cida com seus cães resgatados" class="relative z-10 w-[95%] mx-auto object-cover rounded-[2.5rem] animate-float drop-shadow-[0_40px_40px_rgba(0,0,0,0.3)] border-4 border-white/50">
+                        
+                        <!-- Sale Badge Ping -->
+                        <div class="absolute -bottom-4 right-10 z-20 bg-cta text-white font-bold w-24 h-24 rounded-full flex flex-col items-center justify-center text-center shadow-lg border-4 border-oat transform rotate-12 reveal delay-300">
+                            <span class="text-xs uppercase font-medium leading-none mb-1 opacity-90">Apenas</span>
+                            <span class="text-2xl font-black leading-none">R$27</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Copy Solução -->
+                <div class="w-full lg:w-1/2 order-1 lg:order-2">
+                    <div class="reveal">
+                        <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-sage-500/10 text-sage-700 rounded-full text-[13px] font-bold uppercase tracking-widest mb-6 border border-sage-500/20 shadow-sm">
+                            <div class="w-2 h-2 rounded-full bg-cta animate-pulse"></div>
+                            A Solução em Casa
+                        </div>
+                        
+                        <h2 class="font-serif text-[38px] lg:text-[52px] text-darkText font-bold mb-4 leading-[1.1] tracking-tight">
+                            Apresentando o <br>
+                            <span class="text-sage-700 italic">KIT S.O.S. PET</span>
+                        </h2>
+                        
+                        <h3 class="text-xl md:text-2xl font-serif text-gold font-bold mb-8">O Guia da Farmácia Natural</h3>
+
+                        <p class="text-[17px] text-gray-600 mb-10 border-l-[3px] border-cta pl-5 font-medium leading-relaxed">
+                            O Código de Ação Rápida com <strong class="text-darkText font-bold">20 Protocolos Caseiros 100% testados</strong> para blindar a saúde e promover o alívio imediato do seu parceiro.
+                        </p>
+                    </div>
+
+                    <!-- Bullets Customizados -->
+                    <ul class="space-y-7">
+                        <li class="reveal delay-100 flex items-start gap-5">
+                            <div class="w-14 h-14 bg-white rounded-[1.2rem] shadow-md flex-shrink-0 flex items-center justify-center text-[28px] border border-sage-100 text-sage-500 transform transition hover:scale-110 hover:-rotate-6">
+                                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-[20px] text-sage-900 mb-1">Protocolo Pele Blindada</h4>
+                                <p class="text-gray-600 leading-relaxed font-medium">Cesse o círculo vicioso de coceira e dermatites criando uma barreira invisível com produtos que estão na sua cozinha.</p>
+                            </div>
+                        </li>
+                        <li class="reveal delay-200 flex items-start gap-5">
+                            <div class="w-14 h-14 bg-white rounded-[1.2rem] shadow-md flex-shrink-0 flex items-center justify-center text-[28px] border border-blue-100 text-blue-500 transform transition hover:scale-110 hover:rotate-6">
+                                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-[20px] text-sage-900 mb-1">S.O.S. Estômago Forte</h4>
+                                <p class="text-gray-600 leading-relaxed font-medium">A receita de soro biológico exata que trava a diarreia e estabiliza os vômitos, hidratando o cão profundamente em 30 minutos.</p>
+                            </div>
+                        </li>
+                        <li class="reveal delay-300 flex items-start gap-5">
+                            <div class="w-14 h-14 bg-white rounded-[1.2rem] shadow-md flex-shrink-0 flex items-center justify-center text-[28px] border border-gold/20 text-gold transform transition hover:scale-110 hover:-rotate-3">
+                                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-[20px] text-sage-900 mb-1">Sorriso Branco Sem Risco</h4>
+                                <p class="text-gray-600 leading-relaxed font-medium">Remova o fedor bucal e derreta o início de tártaro através de processos químicos via salivação, sem anestesia perigosa.</p>
+                            </div>
+                        </li>
+                    </ul>
+                    
+                    <div class="reveal delay-400 mt-10 bg-white border border-green-200 rounded-xl p-4 flex items-center gap-4 shadow-sm relative overflow-hidden">
+                        <div class="absolute inset-0 bg-green-50/50"></div>
+                        <div class="w-12 h-12 bg-green-500 rounded-full flex-shrink-0 flex items-center justify-center text-white font-bold text-xl relative z-10 shadow-inner">
+                            +17
+                        </div>
+                        <div class="relative z-10">
+                            <h4 class="font-bold text-[18px] text-green-800">E mais 17 protocolos exclusivos de proteção e recuperação da saúde.</h4>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO 4: BÔNUS EXCLUSIVOS (A OFERTA IRRESISTÍVEL) -->
+    <section class="py-28 bg-sage-900 text-white relative border-y-[12px] border-gold glow-behind">
+        <!-- Texture Matrix for High End feel -->
+        <div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, #ffffff 10px, #ffffff 11px);"></div>
+        
+        <div class="container mx-auto px-5 relative z-10">
+            <div class="text-center max-w-4xl mx-auto mb-20 reveal">
+                <span class="inline-block px-4 py-1.5 border border-gold/50 rounded-full text-gold font-bold tracking-widest text-[11px] uppercase mb-5 backdrop-blur-sm shadow-[0_0_15px_rgba(212,175,55,0.4)]">Ferramentas de Sanidade Mental</span>
+                
+                <h2 class="font-serif text-[36px] md:text-5xl font-medium mb-4 leading-tight">
+                    Garanta seu acesso agora e <br class="hidden md:block">
+                    leve <span class="text-gold italic font-bold">3 presentes VIP</span>
+                </h2>
+                <svg class="w-32 mx-auto text-gold/60 mt-2 mb-4" viewBox="0 0 100 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.20015 12.3999C28.2001 -1.40008 67.8668 0.433251 98.2001 9.99992" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+            </div>
+
+            <!-- Cards de Bônus em Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-[1100px] mx-auto">
+                
+                <!-- Bônus 1 -->
+                <div class="reveal delay-100 bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-xl border border-white/10 rounded-[30px] p-8 md:p-10 relative overflow-hidden group hover:bg-white/10 transition-colors duration-500 shadow-premium-dark flex flex-col h-full">
+                    <div class="absolute -top-16 -right-16 w-40 h-40 bg-cta/30 rounded-full blur-[40px] group-hover:bg-cta/50 group-hover:scale-150 transition-all duration-700"></div>
+                    
+                    <div class="inline-flex bg-cta/20 text-cta border border-cta/30 px-3 py-1 rounded-[10px] font-bold text-xs uppercase mb-6 w-max self-start tracking-wider">Bônus #01</div>
+                    
+                    <h3 class="text-2xl font-serif font-medium text-white leading-tight mb-2">Protocolo Anti-Xixi</h3>
+                    <h4 class="text-gold mb-5 text-[15px] uppercase font-bold tracking-wide">A Receita do "Apaga-Rastro"</h4>
+                    
+                    <p class="text-gray-300 text-[15px] leading-[1.7] mb-8 font-medium">Aprenda a criar o spray eliminador de enzimas na sua pia usando APENAS 2 ingredientes comerciais. Em 72h o seu pet vai esquecer biologicamente os locais errados.</p>
+                    
+                    <div class="mt-auto pt-6 border-t border-white/10 flex flex-col relative">
+                        <span class="text-gray-500 line-through text-sm font-bold opacity-70">Valor: R$ 97,00</span>
+                        <div class="flex items-center gap-3">
+                            <span class="text-white text-xl font-bold uppercase mt-1">Hoje: <span class="bg-cta text-white px-2 py-0.5 rounded shadow-lg">GRÁTIS</span></span>
+                            <!-- Hand drawn arrow -->
+                            <svg class="w-10 text-gold transform rotate-12 mt-2" viewBox="0 0 45 25" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 13.5C12.1667 8.16667 36.9 -0.900002 42.5 12.5M42.5 12.5C39.3333 9.16667 30 5.4 23 9M42.5 12.5C35.6667 15.6667 21 24.3 19.5 24"/></svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bônus 2 -->
+                <div class="reveal delay-200 bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-xl border border-white/10 rounded-[30px] p-8 md:p-10 relative overflow-hidden group hover:bg-white/10 transition-colors duration-500 shadow-premium-dark flex flex-col h-full transform md:-translate-y-6">
+                    <div class="absolute top-0 right-0 left-0 h-1 bg-gold"></div> <!-- Highlight line -->
+                    <div class="absolute -top-16 -right-16 w-40 h-40 bg-gold/20 rounded-full blur-[40px] group-hover:bg-gold/40 group-hover:scale-150 transition-all duration-700"></div>
+                    
+                    <div class="inline-flex bg-gold/20 text-gold border border-gold/30 px-3 py-1 rounded-[10px] font-bold text-xs uppercase mb-6 w-max self-start tracking-wider">Bônus #02</div>
+                    
+                    <h3 class="text-2xl font-serif font-medium text-white leading-tight mb-2">Blindagem Total</h3>
+                    <h4 class="text-gold mb-5 text-[15px] uppercase font-bold tracking-wide">O Spray Escudo Invisível</h4>
+                    
+                    <p class="text-gray-300 text-[15px] leading-[1.7] mb-8 font-medium">Chega de rodapés roídos. Fórmula botânica que cheira bem para humanos, mas causa repulsa total quando o cachorro tenta morder sua mobília cara.</p>
+                    
+                    <div class="mt-auto pt-6 border-t border-white/10 flex flex-col relative">
+                        <span class="text-gray-500 line-through text-sm font-bold opacity-70">Valor: R$ 67,00</span>
+                        <div class="flex items-center gap-3">
+                            <span class="text-white text-xl font-bold uppercase mt-1">Hoje: <span class="bg-cta text-white px-2 py-0.5 rounded shadow-lg">GRÁTIS</span></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bônus 3 -->
+                <div class="reveal delay-300 bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-xl border border-white/10 rounded-[30px] p-8 md:p-10 relative overflow-hidden group hover:bg-white/10 transition-colors duration-500 shadow-premium-dark flex flex-col h-full">
+                    <div class="absolute -top-16 -right-16 w-40 h-40 bg-red-500/20 rounded-full blur-[40px] group-hover:bg-red-500/40 group-hover:scale-150 transition-all duration-700"></div>
+                    
+                    <div class="inline-flex bg-red-500/20 text-red-300 border border-red-500/30 px-3 py-1 rounded-[10px] font-bold text-xs uppercase mb-6 w-max self-start tracking-wider">Bônus #03</div>
+                    
+                    <h3 class="text-2xl font-serif font-medium text-white leading-tight mb-2">15 Assassinos Silenciosos</h3>
+                    <h4 class="text-gold mb-5 text-[15px] uppercase font-bold tracking-wide">Guia de Intoxicação</h4>
+                    
+                    <p class="text-gray-300 text-[15px] leading-[1.7] mb-8 font-medium">Sua casa pode estar armada em cada canto. O catálogo urgente com fotos reais do que NÃO pode estar no chão, na fruteira ou no jardim verde.</p>
+                    
+                    <div class="mt-auto pt-6 border-t border-white/10 flex flex-col relative">
+                        <span class="text-gray-500 line-through text-sm font-bold opacity-70">Valor: R$ 47,00</span>
+                        <div class="flex items-center gap-3">
+                            <span class="text-white text-xl font-bold uppercase mt-1">Hoje: <span class="bg-cta text-white px-2 py-0.5 rounded shadow-lg">GRÁTIS</span></span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            
+            <div class="text-center mt-16 reveal delay-400">
+                <a href="#oferta" class="inline-flex items-center justify-center gap-2 text-white font-bold hover:text-gold transition">
+                    Ver Oferta Completa Abaixo 
+                    <svg class="w-5 h-5 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO 5: PROPÓSITO E ANCORAGEM (EMOCIONAL DA DONA CIDA) -->
+    <section class="py-24 md:py-32 bg-oat relative overflow-hidden">
+        
+        <!-- Abstract Decoration Backdrop -->
+        <div class="absolute -top-32 -left-32 w-[500px] h-[500px] bg-sage-500/5 rounded-full blur-3xl"></div>
+        <div class="absolute -bottom-32 -right-32 w-[600px] h-[600px] bg-gold/5 rounded-full blur-3xl"></div>
+
+        <div class="container mx-auto px-5 relative z-10">
+            <div class="flex flex-col lg:flex-row items-center gap-14 lg:gap-20 max-w-[1100px] mx-auto bg-white rounded-[40px] p-8 md:p-16 shadow-premium border border-sage-100 reveal">
+                
+                <div class="w-full lg:w-[45%]">
+                    <!-- Polaroid Style Image Holder -->
+                    <div class="group relative rounded-xl bg-white p-3 md:p-4 shadow-[0_20px_40px_-5px_rgba(0,0,0,0.15)] pb-10 md:pb-14 transform -rotate-2 hover:rotate-0 transition duration-500">
+                        <!-- Tape overlay effect top middle -->
+                        <div class="absolute -top-3 left-1/2 -translate-x-1/2 w-24 h-8 bg-white/60 backdrop-blur-md shadow-sm border border-white/40 transform rotate-1 z-20" style="background-image: linear-gradient(rgba(0,0,0,0.03), rgba(0,0,0,0));"></div>
+                        
+                        <div class="overflow-hidden rounded relative">
+                            <!-- Imagem 7.png (Mockup) deslocada para o quadro --->
+                            <img src="assets/7.png" alt="Mockup S.O.S. PET transparente" class="w-full object-contain h-[280px] md:h-[480px] p-2 md:p-6 drop-shadow-xl group-hover:-translate-y-2 group-hover:scale-105 transition duration-700">
+                        </div>
+                        
+                        <!-- Handwriting copy bottom polaroid -->
+                        <div class="absolute bottom-3 left-0 w-full text-center">
+                            <p class="font-hand text-2xl md:text-3xl text-gray-800 -rotate-1">A esperança de 17 anjos...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w-full lg:w-[55%]">
+                    <h2 class="font-serif text-[32px] md:text-4xl text-darkText font-bold mb-6 leading-tight tracking-tight block">
+                        Por que entregar mais de <br class="hidden lg:block">
+                        <span class="inline-block relative">
+                            <span class="relative z-10 text-gray-400">R$ 350,00</span>
+                            <!-- Hand drawn strike through -->
+                            <svg class="absolute inset-0 w-[120%] h-full -left-[10%] text-red-500/80 z-20" viewBox="0 0 100 20" preserveAspectRatio="none"><path d="M0,10 Q50,0 100,15 T0,10" stroke="currentColor" stroke-width="4" fill="none"/></svg>
+                        </span>
+                        em métodos oficiais por <span class="text-cta font-extrabold outline-text">27 Reais?</span>
+                    </h2>
+                    
+                    <div class="space-y-4 text-gray-600 text-[17px] md:text-lg leading-relaxed mb-10 font-medium">
+                        <p>Eu sou <strong class="text-sage-700">Mariana Castilho</strong>. E tomei essa decisão radical por uma causa iminente de vida ou morte.</p>
+                        <p>A história da <strong class="text-sage-700">Dona Cida</strong> despedaçou meu coração. Ela resgatou sozinha e com os próprios braços <strong class="text-darkText bg-gold/20 px-1">17 cães das margens do abandono.</strong></p>
+                        <p>Mas ela adoeceu, perdeu a saúde e o emprego. A reserva para alimentar esses pequenos anjos está no fim, restando dias para a fome bater pesada na porta de chapa de aço da sua casinha simples.</p>
+                    </div>
+
+                    <!-- Highlight Commitment Box -->
+                    <div class="bg-gradient-to-br from-sage-500/10 to-transparent p-[2px] rounded-2xl md:rounded-3xl shadow-sm mb-8">
+                        <div class="bg-white rounded-2xl md:rounded-[22px] p-6 md:p-8 relative h-full">
+                            <div class="absolute -top-6 -left-2 bg-white rounded-full p-2 shadow-lg w-14 h-14 flex items-center justify-center text-3xl">❤️</div>
+                            <p class="font-bold text-sage-900 text-[17px] md:text-lg leading-relaxed pl-4 border-l-[3px] border-cta/40 mt-2">
+                                Uma parte direta de CADA venda do kit hoje vai para a compra de sacos de ração e remédios vitais para os 17 peludos da Dona Cida.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <p class="font-extrabold text-darkText mb-4 text-sm uppercase tracking-widest text-sage-700">Neste ato exato, você:</p>
+                        <ul class="space-y-4 font-semibold text-gray-700 pl-1">
+                            <li class="flex items-center gap-3">
+                                <span class="w-6 h-6 flex-shrink-0 flex items-center justify-center bg-gray-100 border border-gray-300 text-gray-600 rounded text-sm shadow-sm font-bold">✓</span> 
+                                <span class="text-[15px] md:text-[17px]">Salva seu pet de doenças terríveis.</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <span class="w-6 h-6 flex-shrink-0 flex items-center justify-center bg-gray-100 border border-gray-300 text-gray-600 rounded text-sm shadow-sm font-bold">✓</span> 
+                                <span class="text-[15px] md:text-[17px]">Poupa fortunas economizando no veterinário.</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <span class="w-6 h-6 flex-shrink-0 flex items-center justify-center bg-cta text-white shadow-[0_5px_15px_rgba(255,107,53,0.3)] rounded text-sm font-bold">✓</span> 
+                                <span class="text-[15px] md:text-[17px] text-darkText">Tira a Dona Cida do desespero e enche a vasilha dos 17 cães.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO 6: A OFERTA CLÍNICA E DEFINITIVA -->
+    <section id="oferta" class="py-24 md:py-32 relative bg-sage-900 bg-grain z-20 text-center">
+        <!-- Dramatic gradient overlay on top -->
+        <div class="absolute top-0 left-0 w-full h-[150px] bg-gradient-to-b from-oat to-transparent"></div>
+        
+        <!-- Light beams -->
+        <div class="absolute top-0 right-1/2 translate-x-1/2 w-[800px] h-[500px] bg-goldglow/10 blur-[100px] rounded-full pointer-events-none mix-blend-overlay"></div>
+
+        <div class="container mx-auto px-5 relative z-10 max-w-[850px] reveal">
+            
+            <div class="bg-white rounded-[2.5rem] p-6 md:p-12 shadow-premium border-4 border-gold/30 relative overflow-hidden backdrop-blur-md">
+                
+                <!-- Tag urgency superior -->
+                <div class="absolute top-0 left-1/2 -translate-x-1/2 bg-red-600 text-white text-[12px] md:text-[14px] font-bold uppercase tracking-[0.2em] px-8 py-1.5 rounded-b-xl shadow-md border-x-2 border-b-2 border-red-700">
+                    Sua Ação é Necessária HOJE
+                </div>
+
+                <div class="mt-10 mb-8 max-w-[600px] mx-auto">
+                    <!-- Recapitulation compacta -->
+                    <div class="flex flex-wrap justify-center gap-3 mb-8 opacity-80">
+                        <span class="bg-gray-100 text-gray-600 px-3 py-1 rounded font-medium text-sm">E-book SOS Pet</span>
+                        <span class="bg-gray-100 text-gray-600 px-3 py-1 rounded font-medium text-sm">+ Bônus Anti-Xixi</span>
+                        <span class="bg-gray-100 text-gray-600 px-3 py-1 rounded font-medium text-sm">+ Bônus Móveis</span>
+                        <span class="bg-gray-100 text-gray-600 px-3 py-1 rounded font-medium text-sm">+ Bônus Tóxicos</span>
+                    </div>
+
+                    <div class="relative inline-block mb-2">
+                        <h2 class="font-serif text-[28px] md:text-[34px] text-gray-400 font-medium">
+                            Valor Original: <span class="line-through decoration-red-500/70 decoration-4">R$ 358,00</span>
+                        </h2>
+                        <!-- Annotation handwriting -->
+                        <p class="absolute -right-8 md:-right-24 -top-6 font-hand text-red-500 text-2xl md:text-3xl rotate-12 drop-shadow-sm">Absurdo!</p>
+                    </div>
+                </div>
+
+                <!-- Price Huge Section -->
+                <div class="border-y border-gray-100 py-8 md:py-10 mb-10 relative">
+                    <!-- Ribbon -->
+                    <div class="absolute top-0 right-0 transform translate-x-4 -translate-y-4">
+                        <div class="bg-gold text-darkText text-xs font-bold uppercase py-1 px-4 transform rotate-12 shadow-lg shadow-gold/20">Acesso Vitalício</div>
+                    </div>
+                    
+                    <p class="text-sage-700 text-sm md:text-base font-bold uppercase tracking-widest mb-2">Levando o pacote completo agra</p>
+                    <div class="flex items-start justify-center text-sage-900 leading-none group relative">
+                        <span class="text-3xl md:text-5xl font-semibold mt-2 md:mt-4 mr-2">R$</span>
+                        <span class="text-[85px] md:text-[130px] font-black tracking-tighter drop-shadow-xl relative z-10">27</span>
+                        <span class="text-3xl md:text-[45px] font-bold mt-2 md:mt-5 ml-1">,00</span>
+                    </div>
+                    <p class="text-gray-500 text-sm md:text-base mt-4 font-medium">Pagamento único. Sem mensalidades surpresas.</p>
+                </div>
+
+                <div class="w-full relative">
+                    <!-- Setas Apontando -->
+                    <svg class="hidden md:block absolute -left-14 top-4 w-12 text-cta rotate-[15deg] max-w-full drop-shadow-lg" viewBox="0 0 55 57" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M53.5 2C42.8333 13.5 15.1 40.7 2 55.5M2 55.5C10.5 53 30.3 46 39.5 45.5M2 55.5C7.16667 46 17.5 25.1 19 15.5" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+                    <svg class="hidden md:block absolute -right-14 top-4 w-12 text-cta rotate-[-15deg] scale-x-[-1] max-w-full drop-shadow-lg" viewBox="0 0 55 57" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M53.5 2C42.8333 13.5 15.1 40.7 2 55.5M2 55.5C10.5 53 30.3 46 39.5 45.5M2 55.5C7.16667 46 17.5 25.1 19 15.5" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+                    
+                    <!-- LINK DE CHECKOUT AQUI -->
+                    <a href="https://pay.kiwify.com.br/kZxqOrz" class="group block w-full">
+                        <button class="w-full bg-gradient-to-r from-[#ff5e1a] to-[#ff3500] hover:from-[#ff4100] hover:to-[#e02b00] text-white btn-3d rounded-2xl py-6 md:py-8 px-4 flex flex-col items-center justify-center relative overflow-hidden btn-animated border-2 border-white/20">
+                            <!-- Button Shine Effect -->
+                            <div class="absolute top-0 -left-[100%] w-1/2 h-full bg-white/20 skew-x-[30deg] group-hover:left-[200%] transition-all duration-700 ease-in-out"></div>
+                            
+                            <span class="text-[22px] md:text-[34px] font-black leading-none drop-shadow-md tracking-tight">QUERO MEU KIT AGORA</span>
+                            <span class="text-[13px] md:text-[17px] mt-2 font-semibold opacity-95 uppercase tracking-wider drop-shadow-sm flex items-center gap-2">
+                                <svg class="w-5 h-5 text-gold glow" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"/></svg>
+                                E Ajudar os 17 Cães a Comer!
+                            </span>
+                        </button>
+                    </a>
+                </div>
+
+                <!-- Safe Payment Bar -->
+                <div class="mt-8 flex items-center justify-center gap-3">
+                    <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                    <span class="text-xs md:text-sm text-gray-500 font-medium">Transação 100% Segura e Criptografada. Privacidade Protegida.</span>
+                </div>
+
+                <!-- Guarantee Seal Editorial Section -->
+                <div class="mt-14 pt-10 border-t-2 border-dashed border-gray-200 text-left bg-gray-50/50 rounded-b-[2rem] -mx-6 md:-mx-12 -mb-6 md:-mb-12 p-8 md:p-12 relative">
+                    <!-- Seal absolute -->
+                    <div class="absolute -top-12 left-1/2 -translate-x-1/2 w-24 h-24 bg-white rounded-full shadow-[0_5px_15px_rgba(0,0,0,0.08)] flex items-center justify-center p-2 border-4 border-gray-50">
+                        <img src="https://cdn-icons-png.flaticon.com/512/10335/10335442.png" alt="Selo Garantia" class="w-full text-sage-500 drop-shadow-sm opacity-80 filter invert-0 hue-rotate-[#7a8d75]">
+                    </div>
+
+                    <h4 class="font-serif font-bold text-2xl text-sage-900 text-center mb-6 pt-2">Risco Crimininalmente Zero (7 Dias)</h4>
+                    
+                    <p class="text-[15px] md:text-[17px] text-gray-600 leading-relaxed font-medium">
+                        O risco não pode, sob hipótese alguma, estar nos seus ombros hoje. Se você aplicar o <em>"Protocolo Pele Blindada"</em> ou preparar a <em>"Solução Anti-Xixi"</em> e a magia não acontecer, ou mesmo se não for com a minha cara e quiser o dinheiro de volta só porque sim...
+                    </p>
+                    <p class="text-[15px] md:text-[17px] text-gray-600 leading-relaxed font-medium mt-4">
+                        Mande <strong class="text-darkText">apenas 1 único e-mail</strong>. Devolverei R$ 27,00 instantaneamente no seu cartão ou PIX, <strong class="underline decoration-sage-300">sem argumentar</strong>. A Dona Cida agradece a intenção, e continuamos parceiros pelo bem do seu cãozinho.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Super Clean -->
+    <footer class="bg-darkText text-gray-500 py-12 md:py-16 text-center text-sm font-medium border-t-4 border-sage-900">
+        <div class="container mx-auto px-5 max-w-[800px]">
+            <p class="mb-8">Este site não faz parte do website do Facebook ou da Meta Platforms, Inc. Além disso, este site NÃO é endossado pelo Facebook de nenhuma maneira. FACEBOOK é uma marca comercial da Meta Platforms, Inc.</p>
+            
+            <div class="flex flex-wrap justify-center gap-6 md:gap-8 mb-8 text-xs uppercase tracking-widest text-gray-400">
+                <a href="#" class="hover:text-gold transition duration-300">Termos de Uso</a>
+                <a href="#" class="hover:text-gold transition duration-300">Políticas de Privacidade</a>
+                <a href="#" class="hover:text-gold transition duration-300">Aviso Legal</a>
+                <a href="#" class="hover:text-gold transition duration-300">Contato</a>
+            </div>
+            
+            <!-- Logo minimalista de rodape -->
+            <div class="font-serif italic text-2xl text-gray-600/50 mb-3 tracking-tighter">S.O.S. PET</div>
+            <p class="text-xs opacity-50">&copy; 2026 Todos os Direitos Extremamente Reservados para Mariana Castilho.</p>
+        </div>
+    </footer>
+
+    <!-- Mobile Sticky CTA Area (Slide Up) -->
+    <div class="mobile-bottom-cta md:hidden" id="stickyCta">
+        <div class="bg-white/95 backdrop-blur-xl border border-sage-100 rounded-[24px] p-2.5 shadow-[0_-15px_40px_rgba(44,62,46,0.15)] mb-2 mx-2">
+            <a href="https://pay.kiwify.com.br/kZxqOrz" class="block w-full">
+                <button class="w-full bg-gradient-to-b from-[#ff5e1a] to-[#e03a0a] text-white font-bold text-[18px] tracking-wide py-4 px-2 rounded-xl shadow-[0_5px_15px_rgba(255,76,21,0.3)] btn-animated relative overflow-hidden">
+                    <span class="relative z-10">GARANTIR O MEU KIT <span class="font-normal opacity-90 mx-1">/</span> R$ 27!</span>
+                </button>
+            </a>
+            <div class="text-center mt-2 text-[11px] font-bold text-gray-400 uppercase tracking-widest flex items-center justify-center gap-1">
+                🔒 Check-out criptografado
+            </div>
+        </div>
+    </div>
+
+    <!-- JS de Performance e Interatividade -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // High-End Reveal Intersection Observer (Staggered fade-up)
+            const revealOptions = {
+                root: null,
+                rootMargin: '0px 0px -50px 0px', // Trigger slighly before visible
+                threshold: 0.15 // Requer pelo menos 15% para ativar
+            };
+
+            const observerReveal = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        // Optional: stop observing if you only want it to animate once
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, revealOptions);
+
+            document.querySelectorAll('.reveal').forEach(el => observerReveal.observe(el));
+
+            // Smooth Scroll Avançado
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetEl = document.querySelector(this.getAttribute('href'));
+                    if (targetEl) {
+                        targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        // Push click in data layer possible here
+                    }
+                });
+            });
+
+            // Sticky Mobile CTA Logic
+            const stickyCta = document.getElementById('stickyCta');
+            const heroBtnSection = document.querySelector('header .btn-animated'); // O botão do header
+            const ofertaSection = document.getElementById('oferta'); // A seção da oferta
+            
+            if(window.innerWidth <= 768 && stickyCta && heroBtnSection && ofertaSection) {
+                // Queremos o sticky ativo SOMENTE quando:
+                // 1. O botão hero principal já passou pra cima
+                // 2. A área do checkout final AINDA não está aparecendo
+                window.addEventListener('scroll', () => {
+                    const heroRect = heroBtnSection.getBoundingClientRect();
+                    const offerRect = ofertaSection.getBoundingClientRect();
+                    const viewportHeight = window.innerHeight;
+                    
+                    // Se o Hero Btn sumiu pra cima (< 0) E o final ainda não tá no pé da página
+                    if (heroRect.top < 0 && offerRect.top > (viewportHeight * 0.8)) {
+                        stickyCta.classList.add('active');
+                    } else {
+                        stickyCta.classList.remove('active');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
+
