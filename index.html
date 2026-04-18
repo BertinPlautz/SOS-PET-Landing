@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="scroll-smooth">
+<html lang="pt-BR" class="scroll-smooth overflow-x-hidden w-full">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -186,12 +186,16 @@
                 position: fixed;
                 bottom: 0;
                 left: 0;
-                width: 100%;
+                right: 0;
                 z-index: 100;
-                padding: 1rem 1rem 1.5rem 1rem;
+                padding: 1rem;
                 background: linear-gradient(to top, rgba(253,251,247,1) 75%, rgba(253,251,247,0));
                 transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
                 transform: translateY(150%);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                box-sizing: border-box;
             }
             .mobile-bottom-cta.active {
                 transform: translateY(0);
@@ -200,7 +204,7 @@
         }
     </style>
 </head>
-<body class="font-sans text-darkText bg-oat antialiased overflow-x-hidden selection:bg-gold selection:text-white">
+<body class="font-sans text-darkText bg-oat antialiased overflow-x-hidden w-full selection:bg-gold selection:text-white">
 
     <!-- SEÇÃO 1: HERO -> A SUPER PROMESSA -->
     <header class="relative min-h-[95vh] flex items-center justify-center overflow-hidden bg-sage-900 bg-grain pt-10 md:pt-0">
@@ -738,7 +742,7 @@
 
     <!-- Mobile Sticky CTA Area (Slide Up) -->
     <div class="mobile-bottom-cta md:hidden" id="stickyCta">
-        <div class="bg-white/95 backdrop-blur-xl border border-sage-100 rounded-[24px] p-2.5 shadow-[0_-15px_40px_rgba(44,62,46,0.15)] mb-2 mx-2">
+        <div class="bg-white/95 backdrop-blur-xl border border-sage-100 rounded-[24px] p-2.5 shadow-[0_-15px_40px_rgba(44,62,46,0.15)] w-full max-w-[400px]">
             <a href="https://pay.kiwify.com.br/kZxqOrz" class="block w-full">
                 <button class="w-full bg-gradient-to-b from-[#ff5e1a] to-[#e03a0a] text-white font-bold text-[18px] tracking-wide py-4 px-2 rounded-xl shadow-[0_5px_15px_rgba(255,76,21,0.3)] btn-animated relative overflow-hidden">
                     <span class="relative z-10">GARANTIR O MEU KIT <span class="font-normal opacity-90 mx-1">/</span> R$ 27!</span>
