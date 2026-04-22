@@ -203,6 +203,24 @@
             body { padding-bottom: 90px; } /* Prevent footer hide */
         }
     </style>
+
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '35007983302181877');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=35007983302181877&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
 </head>
 <body class="font-sans text-darkText bg-oat antialiased overflow-x-hidden w-full selection:bg-gold selection:text-white">
 
@@ -254,7 +272,7 @@
                         <path d="M68.5 2C52.1667 19.3333 13.7 57.6 2 83.5M2 83.5C6 73.1667 17.5 54.1 27.5 60.5M2 83.5C11.6667 85.5 31.8 86.8 35 77.5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
 
-                    <a href="https://pay.kiwify.com.br/kZxqOrz" class="relative group block w-full md:w-[500px]">
+                    <a href="https://pay.kiwify.com.br/kZxqOrz" class="relative group block w-full md:w-[500px]" onclick="fbq('track', 'InitiateCheckout');">
                         <!-- Pulsing glow behind button -->
                         <div class="absolute -inset-1 bg-gradient-to-r from-cta to-orange-400 rounded-full blur-xl opacity-40 group-hover:opacity-70 transition duration-500 group-hover:duration-200 animate-pulse"></div>
                         <button class="relative w-full text-white bg-gradient-to-b from-[#ff6838] to-cta font-bold text-[19px] md:text-[24px] tracking-wide px-8 md:px-12 py-5 md:py-6 rounded-full btn-3d btn-animated w-full text-center border border-white/20">
@@ -681,7 +699,7 @@
                     <svg class="hidden md:block absolute -right-14 top-4 w-12 text-cta rotate-[-15deg] scale-x-[-1] max-w-full drop-shadow-lg" viewBox="0 0 55 57" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M53.5 2C42.8333 13.5 15.1 40.7 2 55.5M2 55.5C10.5 53 30.3 46 39.5 45.5M2 55.5C7.16667 46 17.5 25.1 19 15.5" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
                     
                     <!-- LINK DE CHECKOUT AQUI -->
-                    <a href="https://pay.kiwify.com.br/kZxqOrz" class="group block w-full">
+                    <a href="https://pay.kiwify.com.br/kZxqOrz" class="group block w-full" onclick="fbq('track', 'InitiateCheckout');">
                         <button class="w-full bg-gradient-to-r from-[#ff5e1a] to-[#ff3500] hover:from-[#ff4100] hover:to-[#e02b00] text-white btn-3d rounded-2xl py-6 md:py-8 px-4 flex flex-col items-center justify-center relative overflow-hidden btn-animated border-2 border-white/20">
                             <!-- Button Shine Effect -->
                             <div class="absolute top-0 -left-[100%] w-1/2 h-full bg-white/20 skew-x-[30deg] group-hover:left-[200%] transition-all duration-700 ease-in-out"></div>
@@ -743,7 +761,7 @@
     <!-- Mobile Sticky CTA Area (Slide Up) -->
     <div class="mobile-bottom-cta md:hidden" id="stickyCta">
         <div class="bg-white/95 backdrop-blur-xl border border-sage-100 rounded-[24px] p-2.5 shadow-[0_-15px_40px_rgba(44,62,46,0.15)] w-full max-w-[400px]">
-            <a href="https://pay.kiwify.com.br/kZxqOrz" class="block w-full">
+            <a href="https://pay.kiwify.com.br/kZxqOrz" class="block w-full" onclick="fbq('track', 'InitiateCheckout');">
                 <button class="w-full bg-gradient-to-b from-[#ff5e1a] to-[#e03a0a] text-white font-bold text-[18px] tracking-wide py-4 px-2 rounded-xl shadow-[0_5px_15px_rgba(255,76,21,0.3)] btn-animated relative overflow-hidden">
                     <span class="relative z-10">GARANTIR O MEU KIT <span class="font-normal opacity-90 mx-1">/</span> R$ 27!</span>
                 </button>
